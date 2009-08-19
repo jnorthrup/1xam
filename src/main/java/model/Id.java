@@ -3,15 +3,18 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 0
+ * <p>recordSize: 14
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>UUID</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link IdVisitor#UUID(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>UUID</td><td>0xe</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.UUID}</td></tr>
  * 
  * @see model.Id#UUID
  * </table>
  */
 public enum Id { 
-UUID;
+UUID(0xe)	{{
+		___subrecord___=model.UUID.class;
+	}}
+;
 	public static final boolean ___isValue___=false;
 	
 	public static final boolean ___isRef___=false;
@@ -23,7 +26,7 @@ UUID;
      */
 	public static int ___recordlen___;
 	/**
-     * a hint class for src.
+     * a hint for src.
      */
 	public String ___src___;
 	/**

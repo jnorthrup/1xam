@@ -3,7 +3,7 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 0
+ * <p>recordSize: 14
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
  * <tr><td>data</td><td>0xe</td><td>0x0</td><td></td><td>byte[]</td><td>{@link UUIDVisitor#data(ByteBuffer, int[], IntBuffer)}</td></tr>
  * 
@@ -11,7 +11,7 @@ import java.lang.reflect.*;
  * </table>
  */
 public enum UUID { 
-data(0xe);
+data(20);
 	public static final boolean ___isValue___=false;
 	
 	public static final boolean ___isRef___=false;
@@ -23,7 +23,7 @@ data(0xe);
      */
 	public static int ___recordlen___;
 	/**
-     * a hint class for src.
+     * a hint for src.
      */
 	public String ___src___;
 	/**

@@ -14,7 +14,7 @@ import java.util.logging.*;
 
 public class EnumPackageAssemblyUtil {
     private static final String EOL = "\n";
-    private static final Map<CharSequence, String> INTRINSICS = new HashMap <CharSequence, String>();
+    private static final Map<CharSequence, String> INTRINSICS = new TreeMap <CharSequence, String>();
     private static final String[] ISAREFS = new String[]{"Record", "Value", "Header", "Ref", "Info"};
     private static final String ISA_MODS = Modifier.toString(Modifier.STATIC | Modifier.FINAL | Modifier.PUBLIC);
     static final Map<Class<?>, Pair<String, Pair<String, String>>> bBufWrap = new LinkedHashMap<Class<?>, Pair<String, Pair<String, String>>>();
@@ -61,7 +61,7 @@ public class EnumPackageAssemblyUtil {
                             "\tpublic String ___doc___;");
         INTRINSICS.put("___src___",
                     "/**\n" +
-                            "     * a hint class for src.\n" +
+                            "     * a hint for src.\n" +
                             "     */\n" +
                             "\tpublic String ___src___;");
             for (String isaref : ISAREFS)
@@ -687,3 +687,22 @@ public class EnumPackageAssemblyUtil {
 
 
 
+/*
+package model;
+
+
+
+public enum UUID { data ; public final int ___size___=20 ;}
+enum Id{UUID}
+enum Utf8$16{bytes; public final int ___size___=16; public String ___doc___="remove trailing 0's";}
+enum Utf8$64{bytes; public final int ___size___=64 ;public String ___doc___="remove trailing 0's";}
+enum Utf8$128{bytes; public final int ___size___=128; public String ___doc___="remove trailing 0's";}
+enum Utf8$256{bytes; public final int ___size___=256 ;public String ___doc___="remove trailing 0's";}
+enum Utf8$1024{bytes; public final int ___size___=1024; public String ___doc___="remove trailing 0's";}
+enum Utf8$8192{bytes; public final int ___size___=8192;public String ___doc___="remove trailing 0's";}
+enum HostName{Utf8$128}
+enum Name{Utf8$128}
+enum Email{Utf8$128}
+enum Password{Utf8$16}
+enum Account{Id,Name,Email,Password}
+*/

@@ -3,15 +3,18 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 0
+ * <p>recordSize: 16
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>Utf8$16</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link PasswordVisitor#Utf8$16(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Utf8$16</td><td>0x10</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.Utf8$16}</td></tr>
  * 
  * @see model.Password#Utf8$16
  * </table>
  */
 public enum Password { 
-Utf8$16;
+Utf8$16(0x10)	{{
+		___subrecord___=model.Utf8$16.class;
+	}}
+;
 	public static final boolean ___isValue___=false;
 	
 	public static final boolean ___isRef___=false;
@@ -23,7 +26,7 @@ Utf8$16;
      */
 	public static int ___recordlen___;
 	/**
-     * a hint class for src.
+     * a hint for src.
      */
 	public String ___src___;
 	/**
