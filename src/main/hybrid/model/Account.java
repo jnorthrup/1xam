@@ -3,12 +3,12 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 286
+ * <p>recordSize: 0
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>Id</td><td>0xe</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.Id}</td></tr>
- * <tr><td>Name</td><td>0x80</td><td>0xe</td><td></td><td>byte[]</td><td>{@link model.Name}</td></tr>
- * <tr><td>Email</td><td>0x80</td><td>0x8e</td><td></td><td>byte[]</td><td>{@link model.Email}</td></tr>
- * <tr><td>Password</td><td>0x10</td><td>0x10e</td><td></td><td>byte[]</td><td>{@link model.Password}</td></tr>
+ * <tr><td>Id</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Id(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Name</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Name(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Email</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Email(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Password</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Password(ByteBuffer, int[], IntBuffer)}</td></tr>
  * 
  * @see model.Account#Id
  * @see model.Account#Name
@@ -17,23 +17,14 @@ import java.lang.reflect.*;
  * </table>
  */
 public enum Account { 
-Id(0xe)	{{
-		___subrecord___=model.Id.class;
-	}}
-,Name(0x80)	{{
-		___subrecord___=model.Name.class;
-	}}
-,Email(0x80)	{{
-		___subrecord___=model.Email.class;
-	}}
-,Password(0x10)	{{
-		___subrecord___=model.Password.class;
-	}}
-;
-	public static final boolean ___isValue___=false;
+Id,Name,Email,Password;
+	/**
+     * a hint class for docs.
+     */
+	public String ___doc___;
 	
-	public static final boolean ___isRef___=false;
-	public static final boolean ___isRecord___=false;
+	
+	
 	
 	
 	/**
@@ -41,19 +32,17 @@ Id(0xe)	{{
      */
 	public static int ___recordlen___;
 	/**
-     * a hint for src.
+     * the offset from record-start of the field
      */
-	public String ___src___;
+	public final int ___seek___;
 	/**
      * the size per field, if any
      */
 	public final int ___size___;
-	public static final boolean ___isInfo___=false;
 	/**
-     * a hint class for docs.
+     * a hint for src.
      */
-	public String ___doc___;
-	public static final boolean ___isHeader___=false;
+	public String ___src___;
 	/**
      * a delegate class which will perform sub-indexing on behalf of a field once it has marked its initial starting
      * offset into the stack.
@@ -63,12 +52,11 @@ Id(0xe)	{{
      * a hint class for bean-wrapper access to data contained.
      */
 	public Class ___valueclass___;
-	
-	
-	/**
-     * the offset from record-start of the field
-     */
-	public final int ___seek___;
+	public static final boolean ___isHeader___=false;
+	public static final boolean ___isInfo___=false;
+	public static final boolean ___isRecord___=false;
+	public static final boolean ___isRef___=false;
+	public static final boolean ___isValue___=false;
     /** Account templated Byte Struct 
      * @param dimensions [0]=___size___,[1]= forced ___seek___
      */
@@ -80,9 +68,7 @@ Id(0xe)	{{
     }
 
     int[] init(int... dimensions) {
-        int size = dimensions.length > 0 ? dimensions[0] : 0,
-                seek= dimensions.length > 1 ? dimensions[1] : 0;
-
+        int size = dimensions.length > 0 ? dimensions[0] : 0;
         if (___subrecord___ == null) {
             final String[] indexPrefixes = {"", "s", "_", "Index", "Length", "Ref", "Header", "Info", "Table"};
             for (String indexPrefix : indexPrefixes) {
@@ -120,9 +106,8 @@ Id(0xe)	{{
             }
         }
 
-        seek = ___recordlen___;
-        ___recordlen___ += size;
-
+        int seek = dimensions.length > 1 ? dimensions[1] : ___recordlen___;
+        ___recordlen___ = Math.max(___recordlen___,seek+size);
         return new int[]{size, seek};
     }
     /**

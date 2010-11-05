@@ -2,7 +2,9 @@ package model;
 
 
 import java.io.*;
+
 import static java.lang.Package.*;
+
 import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
@@ -14,7 +16,7 @@ import java.util.logging.*;
 
 public class EnumPackageAssemblyUtil {
     private static final String EOL = "\n";
-    private static final Map<CharSequence, String> INTRINSICS = new TreeMap <CharSequence, String>();
+    private static final Map<CharSequence, String> INTRINSICS = new TreeMap<CharSequence, String>();
     private static final String[] ISAREFS = new String[]{"Record", "Value", "Header", "Ref", "Info"};
     private static final String ISA_MODS = Modifier.toString(Modifier.STATIC | Modifier.FINAL | Modifier.PUBLIC);
     static final Map<Class<?>, Pair<String, Pair<String, String>>> bBufWrap = new LinkedHashMap<Class<?>, Pair<String, Pair<String, String>>>();
@@ -50,22 +52,22 @@ public class EnumPackageAssemblyUtil {
                         "     */\n" +
                         "\tpublic Class<? extends Enum> ___subrecord___;");
         INTRINSICS.put("___valueclass___",
-                    "/**\n" +
-                            "     * a hint class for bean-wrapper access to data contained.\n" +
-                            "     */\n" +
-                            "\tpublic Class ___valueclass___;");
+                "/**\n" +
+                        "     * a hint class for bean-wrapper access to data contained.\n" +
+                        "     */\n" +
+                        "\tpublic Class ___valueclass___;");
         INTRINSICS.put("___doc___",
-                    "/**\n" +
-                            "     * a hint class for docs.\n" +
-                            "     */\n" +
-                            "\tpublic String ___doc___;");
+                "/**\n" +
+                        "     * a hint class for docs.\n" +
+                        "     */\n" +
+                        "\tpublic String ___doc___;");
         INTRINSICS.put("___src___",
-                    "/**\n" +
-                            "     * a hint for src.\n" +
-                            "     */\n" +
-                            "\tpublic String ___src___;");
-            for (String isaref : ISAREFS)
-            INTRINSICS.put("___is" + isaref+"___", "");
+                "/**\n" +
+                        "     * a hint for src.\n" +
+                        "     */\n" +
+                        "\tpublic String ___src___;");
+        for (String isaref : ISAREFS)
+            INTRINSICS.put("___is" + isaref + "___", "");
     }
 
     public String getEnumsStructsForPackage(Class<?> tableRecordClass) throws Exception {
@@ -106,7 +108,7 @@ public class EnumPackageAssemblyUtil {
         display += renderConstantFields(enumClazz) + ";\n";
         String result = renderBaseEnumFields(enumClazz);
 
-        final String trClass = tableRecordClass .getCanonicalName();
+        final String trClass = tableRecordClass.getCanonicalName();
         display += result + "    /** " + enumName + " templated Byte Struct \n" +
                 "     * @param dimensions [0]=___size___,[1]= forced ___seek___\n" +
                 "     */\n";
@@ -122,8 +124,7 @@ public class EnumPackageAssemblyUtil {
                 "    }\n" +
                 "\n" +
                 "    int[] init(int... dimensions) {\n" +
-                "        int size = dimensions.length > 0 ? dimensions[0] : 0,\n" +
-                "                seek= dimensions.length > 1 ? dimensions[1] : 0;\n" +
+                "        int size = dimensions.length > 0 ? dimensions[0] : 0;" +
                 "\n" +
                 "        if (___subrecord___ == null) {\n" +
                 "            final String[] indexPrefixes = {\"\", \"s\", \"_\", \"Index\", \"Length\", \"Ref\", \"Header\", \"Info\", \"Table\"};\n" +
@@ -162,8 +163,8 @@ public class EnumPackageAssemblyUtil {
                 "            }\n" +
                 "        }\n" +
                 "\n" +
-                "        seek = ___recordlen___;\n" +
-                "        ___recordlen___ += size;\n" +
+                "        int seek = dimensions.length > 1 ? dimensions[1] : ___recordlen___;\n" +
+                "        ___recordlen___ = Math.max(___recordlen___,seek+size);" +
                 "\n" +
                 "        return new int[]{size, seek};\n" +
                 "    }" +
@@ -287,16 +288,16 @@ public class EnumPackageAssemblyUtil {
                 try {
                     final Field[] fields = enumClazz.getFields();
                     String tmpString = "";
-                            try {
-                            Field doc = enumClazz.getField("___doc___");
-                            Object o1 = doc.get(enumClazz);
-                            if (null != o1) {
-                                tmpString += o1.toString();
-                            }
-                        } catch (Exception e) {
-                         } 
+                    try {
+                        Field doc = enumClazz.getField("___doc___");
+                        Object o1 = doc.get(enumClazz);
+                        if (null != o1) {
+                            tmpString += o1.toString();
+                        }
+                    } catch (Exception e) {
+                    }
                     for (Field field : fields) {
-               
+
 
                         String attrName = field.getName().replaceAll(enumClazz.getCanonicalName(), "");
                         if (attrName.equals("___size___")) {
@@ -354,7 +355,7 @@ public class EnumPackageAssemblyUtil {
             Class subRecord = null;
             Class valClazz = null;
 
-            final String[] strings = {"___subrecord___", "___valueclass___", "___size___", "___seek___", "___doc___","___src___",};
+            final String[] strings = {"___subrecord___", "___valueclass___", "___size___", "___seek___", "___doc___", "___src___",};
 
             final Object[] objects = new Object[strings.length];
             for (int i = 0; i < strings.length; i++) {
@@ -498,7 +499,7 @@ public class EnumPackageAssemblyUtil {
     }
 
     public static class PackageAssembly {
-    
+
         public static Map<Class<? extends Enum>, Iterable<? extends Enum>> getEnumsStructsForPackage(final Package package_) throws Exception {
             Map<Class<? extends Enum>, Iterable<? extends Enum>> map = new HashMap<Class<? extends Enum>, Iterable<? extends Enum>>();
             for (Class<? extends Enum> aClass : getClassessOfParent(package_, Enum.class)) {
@@ -507,7 +508,7 @@ public class EnumPackageAssemblyUtil {
             }
             return map;
         }
-    
+
         public static List<Class<Enum>> getEnumsForPackage(Package package_)
                 throws ClassNotFoundException {
             // This will hold a list of directories matching the pckgname.
@@ -516,7 +517,7 @@ public class EnumPackageAssemblyUtil {
             ArrayList<File> directories = new ArrayList<File>();
             String pckgname = package_.getName();
             try {
-    
+
                 ClassLoader cld = Thread.currentThread().getContextClassLoader();
                 if (cld == null) {
                     throw new ClassNotFoundException("Can't get class loader.");
@@ -526,10 +527,10 @@ public class EnumPackageAssemblyUtil {
                 Enumeration<URL> resources = cld.getResources(resName);
                 while (resources.hasMoreElements()) {
                     URL res = resources.nextElement();
-                    if (res.getProtocol().equalsIgnoreCase("jar")||res.getProtocol().equalsIgnoreCase("zip")) {
+                    if (res.getProtocol().equalsIgnoreCase("jar") || res.getProtocol().equalsIgnoreCase("zip")) {
                         JarURLConnection conn = (JarURLConnection) res.openConnection();
                         JarFile jar = conn.getJarFile();
-    
+
                         for (JarEntry e : Collections.list(jar.entries())) {
                             if (e.getName().startsWith(resName) && e.getName().endsWith(".class") && !e.getName().contains("$")) {
                                 String className = e.getName().replace("/", ".").substring(0, e.getName().length() - 6);
@@ -550,7 +551,7 @@ public class EnumPackageAssemblyUtil {
                 throw new ClassNotFoundException("IOException was thrown when trying " +
                         "to get all resources for " + pckgname);
             }
-    
+
             // For every directory identified capture all the .class files
             for (File directory : directories) {
                 if (directory.exists()) {
@@ -571,8 +572,8 @@ public class EnumPackageAssemblyUtil {
             }
             return classes;
         }
-    
-    
+
+
         public List<Class<Enum>> getClassessOfInterface(Package thePackage, Class theInterface) {
             List<Class<Enum>> classList = new ArrayList<Class<Enum>>();
             try {
@@ -581,20 +582,19 @@ public class EnumPackageAssemblyUtil {
                         classList.add(discovered);
                     }
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getCanonicalName()).log(Level.SEVERE, null, ex);
             }
-    
+
             return classList;
         }
-    
+
         public static List<Class<? extends Enum>> getClassessOfParent(Package thePackage, Class<? extends Enum> theParent) {
             List<Class<? extends Enum>> classList = new ArrayList<Class<? extends Enum>>();
-    
+
             try {
                 for (Class discovered : getEnumsForPackage(thePackage)) {
-    
+
                     do {
                         Class parent = discovered.getSuperclass();
                         if (parent != theParent) {
@@ -610,33 +610,33 @@ public class EnumPackageAssemblyUtil {
             }
             return classList;
         }
-    
-    
+
+
     }
 
     /**
- * A Hackish tuple class.  Acts as Map Entry as well as attempting some level of jit trickery by state as obj[] as
+     * A Hackish tuple class.  Acts as Map Entry as well as attempting some level of jit trickery by state as obj[] as
      * external from-stack.
      */
     public static class Pair<K, V> implements Entry<K, V> {
         public Object[] kv;
-    
+
         public Pair(K k, V v) {
             kv = new Object[]{k, v};
         }
-    
+
         public Pair(Object... two) {
             kv = two;
         }
-    
+
         public K getFirst() {
             return (K) kv[0];
         }
-    
+
         public V getSecond() {
             return (V) kv[1];
         }
-    
+
         /**
          * Returns the key corresponding to this entry.
          *
@@ -647,7 +647,7 @@ public class EnumPackageAssemblyUtil {
         public K getKey() {
             return (K) kv[0];
         }
-    
+
         /**
          * Returns the value corresponding to this entry.  If the mapping has been removed from the backing map (by the
          * iterator's <tt>remove</tt> operation), the results of this call are undefined.
@@ -659,18 +659,19 @@ public class EnumPackageAssemblyUtil {
         public V getValue() {
             return (V) kv[1];//To change body of implemented methods use File | Settings | File Templates.
         }
-    
-    
+
+
         public Object setValue(Object value) {
             throw new UnsupportedOperationException();
         }
-    
+
         public int hashCode() {
             return getKey().hashCode() << 16 + getValue().hashCode() & 0xffff;
-    
+
         }
-    
-    }   
+
+    }
+
     public static void main(String... args) throws Exception {
 //        final String dirName = args.length > 0 ? "target/classes" : args[0];
 //
@@ -680,11 +681,10 @@ public class EnumPackageAssemblyUtil {
 ////
 ////        File index = getIndexFile(indexName);
 
-        new EnumPackageAssemblyUtil().getEnumsStructsForPackage( model.
+        new EnumPackageAssemblyUtil().getEnumsStructsForPackage(model.
                 UUID.class);
     }
 }
-
 
 
 /*
