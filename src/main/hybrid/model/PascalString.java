@@ -3,18 +3,17 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 128
+ * <p>recordSize: 256
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>Utf8$128</td><td>0x80</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.Utf8$128}</td></tr>
+ * <tr><td>len</td><td>0x1</td><td>0x0</td><td></td><td>byte</td><td>{@link PascalStringVisitor#len(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>bytes</td><td>0xff</td><td>0x1</td><td></td><td>byte[]</td><td>{@link PascalStringVisitor#bytes(ByteBuffer, int[], IntBuffer)}</td></tr>
  * 
- * @see model.Name#Utf8$128
+ * @see model.PascalString#len
+ * @see model.PascalString#bytes
  * </table>
  */
-public enum Name { 
-Utf8$128(0x80)	{{
-		___subrecord___=model.Utf8$128.class;
-	}}
-;
+public enum PascalString { 
+len(0x1),bytes(0xff);
 	/**
      * a hint class for docs.
      */
@@ -54,10 +53,10 @@ Utf8$128(0x80)	{{
 	public static final boolean ___isRecord___=false;
 	public static final boolean ___isRef___=false;
 	public static final boolean ___isValue___=false;
-    /** Name templated Byte Struct 
+    /** PascalString templated Byte Struct 
      * @param dimensions [0]=___size___,[1]= forced ___seek___
      */
-	Name (int... dimensions) {
+	PascalString (int... dimensions) {
         int[] dim = init(dimensions);
         ___size___ = dim[0];
         ___seek___ = dim[1];
@@ -116,10 +115,10 @@ Utf8$128(0x80)	{{
      */
     static void index
             (ByteBuffer src, int[] register, IntBuffer stack) {
-        for (Name Name_ : values()) {
-            String hdr = Name_.name();
+        for (PascalString PascalString_ : values()) {
+            String hdr = PascalString_.name();
             System.err.println("hdr:pos " + hdr + ':' + stack.position());
-            Name_.subIndex(src, register, stack);
+            PascalString_.subIndex(src, register, stack);
         }
     }
 
@@ -151,4 +150,4 @@ Utf8$128(0x80)	{{
             }
 */        }
     }}
-//@@ #endName
+//@@ #endPascalString

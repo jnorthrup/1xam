@@ -3,12 +3,12 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 0
+ * <p>recordSize: 286
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>Id</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Id(ByteBuffer, int[], IntBuffer)}</td></tr>
- * <tr><td>Name</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Name(ByteBuffer, int[], IntBuffer)}</td></tr>
- * <tr><td>Email</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Email(ByteBuffer, int[], IntBuffer)}</td></tr>
- * <tr><td>Password</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link AccountVisitor#Password(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Id</td><td>0xe</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.Id}</td></tr>
+ * <tr><td>Name</td><td>0x80</td><td>0xe</td><td></td><td>byte[]</td><td>{@link model.Name}</td></tr>
+ * <tr><td>Email</td><td>0x80</td><td>0x8e</td><td></td><td>byte[]</td><td>{@link model.Email}</td></tr>
+ * <tr><td>Password</td><td>0x10</td><td>0x10e</td><td></td><td>byte[]</td><td>{@link model.Password}</td></tr>
  * 
  * @see model.Account#Id
  * @see model.Account#Name
@@ -17,7 +17,19 @@ import java.lang.reflect.*;
  * </table>
  */
 public enum Account { 
-Id,Name,Email,Password;
+Id(0xe)	{{
+		___subrecord___=model.Id.class;
+	}}
+,Name(0x80)	{{
+		___subrecord___=model.Name.class;
+	}}
+,Email(0x80)	{{
+		___subrecord___=model.Email.class;
+	}}
+,Password(0x10)	{{
+		___subrecord___=model.Password.class;
+	}}
+;
 	/**
      * a hint class for docs.
      */

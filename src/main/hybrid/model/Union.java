@@ -3,16 +3,20 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 128
+ * <p>recordSize: 257
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>Utf8$128</td><td>0x80</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.Utf8$128}</td></tr>
+ * <tr><td>type</td><td>0x1</td><td>0x0</td><td></td><td>byte</td><td>{@link UnionVisitor#type(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Number</td><td>0xa</td><td>0x1</td><td></td><td>byte[]</td><td>{@link UnionVisitor#Number(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>PascalString</td><td>0x100</td><td>0x1</td><td></td><td>byte[]</td><td>{@link model.PascalString}</td></tr>
  * 
- * @see model.Name#Utf8$128
+ * @see model.Union#type
+ * @see model.Union#Number
+ * @see model.Union#PascalString
  * </table>
  */
-public enum Name { 
-Utf8$128(0x80)	{{
-		___subrecord___=model.Utf8$128.class;
+public enum Union { 
+type(0x1),Number(0xa),PascalString(0x100)	{{
+		___subrecord___=model.PascalString.class;
 	}}
 ;
 	/**
@@ -54,10 +58,10 @@ Utf8$128(0x80)	{{
 	public static final boolean ___isRecord___=false;
 	public static final boolean ___isRef___=false;
 	public static final boolean ___isValue___=false;
-    /** Name templated Byte Struct 
+    /** Union templated Byte Struct 
      * @param dimensions [0]=___size___,[1]= forced ___seek___
      */
-	Name (int... dimensions) {
+	Union (int... dimensions) {
         int[] dim = init(dimensions);
         ___size___ = dim[0];
         ___seek___ = dim[1];
@@ -116,10 +120,10 @@ Utf8$128(0x80)	{{
      */
     static void index
             (ByteBuffer src, int[] register, IntBuffer stack) {
-        for (Name Name_ : values()) {
-            String hdr = Name_.name();
+        for (Union Union_ : values()) {
+            String hdr = Union_.name();
             System.err.println("hdr:pos " + hdr + ':' + stack.position());
-            Name_.subIndex(src, register, stack);
+            Union_.subIndex(src, register, stack);
         }
     }
 
@@ -151,4 +155,4 @@ Utf8$128(0x80)	{{
             }
 */        }
     }}
-//@@ #endName
+//@@ #endUnion

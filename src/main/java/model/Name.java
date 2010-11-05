@@ -3,15 +3,18 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 0
+ * <p>recordSize: 128
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
- * <tr><td>Utf8$128</td><td>0x4</td><td>0x0</td><td></td><td>int</td><td>{@link NameVisitor#Utf8$128(ByteBuffer, int[], IntBuffer)}</td></tr>
+ * <tr><td>Utf8$128</td><td>0x80</td><td>0x0</td><td></td><td>byte[]</td><td>{@link model.Utf8$128}</td></tr>
  * 
  * @see model.Name#Utf8$128
  * </table>
  */
 public enum Name { 
-Utf8$128;
+Utf8$128(0x80)	{{
+		___subrecord___=model.Utf8$128.class;
+	}}
+;
 	/**
      * a hint class for docs.
      */

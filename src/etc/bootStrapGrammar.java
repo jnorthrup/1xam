@@ -15,3 +15,6 @@ enum Name{Utf8$128}
 enum Email{Utf8$128}
 enum Password{Utf8$16}
 enum Account{Id,Name,Email,Password}
+enum PascalString{len(1),bytes(255)}
+enum Any{type(1),PascalString(0/** corrected by reflection assembly at generate time. */,1),Number(10,1)}
+

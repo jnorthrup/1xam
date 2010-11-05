@@ -3,7 +3,7 @@ import java.nio.*;
 import java.lang.reflect.*;
 
 /**
- * <p>recordSize: 0
+ * <p>recordSize: 128
  * <table><tr> <th>name</th><th>size</th><th>seek</th><th>description</th><th>Value Class</th><th>Sub-Index</th></tr>
  * <tr><td>bytes</td><td>0x80</td><td>0x0</td><td>remove trailing 0's</td><td>byte[]</td><td>{@link Utf8$128Visitor#bytes(ByteBuffer, int[], IntBuffer)}</td></tr>
  * 
